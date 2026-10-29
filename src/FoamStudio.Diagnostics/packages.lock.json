@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "dependencies": {
+    "net10.0": {
+      "foamstudio.core": {
+        "type": "Project"
+      },
+      "foamstudio.infrastructure": {
+        "type": "Project",
+        "dependencies": {
+          "FoamStudio.Core": "[1.0.0, )"
+        }
+      },
+      "foamstudio.openfoam": {
+        "type": "Project",
+        "dependencies": {
+          "FoamStudio.Core": "[1.0.0, )",
+          "FoamStudio.Infrastructure": "[1.0.0, )"
+        }
+      }
+    }
+  }
+}

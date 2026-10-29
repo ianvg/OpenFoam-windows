@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net10.0</TargetFramework></PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../FoamStudio.Core/FoamStudio.Core.csproj" />
+    <ProjectReference Include="../FoamStudio.Infrastructure/FoamStudio.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

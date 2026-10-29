@@ -1,10 +1,54 @@
 # OpenFoam-windows
 
-A planned Windows desktop interface for setting up and running OpenFOAM simulations
+A Windows desktop prototype for setting up and running OpenFOAM simulations
 through Windows Subsystem for Linux 2 (WSL2).
 
-**Status: planning.** This repository currently contains the project plan and
-license. There is no runnable application or installer yet.
+**Status: initial working prototype.** The Uno Windows app detects WSL distributions,
+checks OpenFOAM, and runs the installed cavity tutorial with live logs and Stop
+support. There is no installer yet. Configuration forms, saved projects, residual
+charts, and ParaView launch integration remain planned.
+
+## Build and run
+
+Development prerequisites: Windows x64, .NET SDK 10.0.400 or a later 10.0.4xx patch,
+and Visual Studio with the Windows/WinUI development tools. The repository pins
+Uno.Sdk 6.7.18. Package restores require access to NuGet.
+
+```powershell
+./tools/build.ps1 -Test
+./tools/run.ps1
+```
+
+For simulation, use a WSL2 Ubuntu distribution with OpenFOAM Foundation 13 installed.
+The tested environment is Ubuntu 22.04 with `/opt/openfoam13/etc/bashrc`.
+The prototype does not install or change WSL or OpenFOAM. Setup references:
+[OpenFOAM on Windows](https://openfoam.org/download/windows/) and
+[Microsoft WSL commands](https://learn.microsoft.com/windows/wsl/basic-commands).
+
+In the app, select the distribution, check the OpenFOAM environment, and click
+**Run cavity**. Each run creates a unique directory below
+`~/.local/share/FoamStudio/runs/` in that distribution. The case includes `run.log`,
+`mesh-check.log`, and, on success, `cavity.foam`. The existing tutorials are never
+modified. The interface retains the last 120,000 characters; the case log contains
+the full mesh/solver output. Closing during an operation requests cancellation and
+waits for it before closing the window.
+
+The cavity uses the installed tutorial's physics and numerical defaults, including
+its turbulence settings. It is an integration example, not a validated design tool.
+
+### Backend diagnostics
+
+These commands exercise the same backend without the interface:
+
+```powershell
+dotnet run --project src/FoamStudio.Diagnostics -- probe Ubuntu-22.04
+dotnet run --project src/FoamStudio.Diagnostics -- cavity Ubuntu-22.04
+dotnet run --project src/FoamStudio.Diagnostics -- cancel-test Ubuntu-22.04
+```
+
+The cancellation check starts its own Linux job with a TERM-resistant child and
+verifies that no matching child remains after cancellation. It does not stop the
+distribution or other simulations. Ctrl+C requests cancellation in the CLI.
 
 ## Approach
 
@@ -13,8 +57,8 @@ license. There is no runnable application or installer yet.
 - Standard OpenFOAM case folders, with working cases stored in the Linux filesystem.
 - ParaView for viewing simulation results.
 
-The supported OpenFOAM distribution, version, Ubuntu release, and .NET/Uno versions
-will be selected and recorded during the initial environment prototype.
+The initial supported solver environment is OpenFOAM Foundation 13 on WSL2 Ubuntu.
+Other OpenFOAM versions are rejected by the environment check; adapters can follow.
 
 ## First milestone
 
@@ -37,6 +81,7 @@ mesh, finishes its simulation, reopens successfully, and displays its results.
 | Core | Project models, validation, and workflow rules |
 | OpenFoam | Case generation, templates, and version-specific commands |
 | Infrastructure | WSL processes, files, settings, and logging |
+| Diagnostics | CLI environment, simulation, and cancellation checks |
 
 ## Development sequence
 
@@ -48,6 +93,17 @@ mesh, finishes its simulation, reopens successfully, and displays its results.
 
 Later scope includes STL import, snappyHexMesh, inlet/outlet flows, turbulence,
 parallel solving, and engineering reports. These are outside the first milestone.
+
+## Prototype limitations
+
+- Single serial tutorial run at a time per app window; no custom case settings yet.
+- No project save/open, charts, results viewer, or ParaView launch button yet.
+- ParaView detection checks the selected Linux environment only.
+- Startup environment checks time out after 45 seconds. A simulation cancellation
+  waits for the WSL process handshake; an unresponsive WSL startup may delay Stop.
+- Abrupt termination of the Windows app or Windows itself is not recovered yet.
+- Windows binary distribution and a complete dependency notice inventory remain
+  release work. See [third-party notes](THIRD_PARTY_NOTICES.md).
 
 ## License and independence
 
