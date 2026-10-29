@@ -1,0 +1,24 @@
+Foam Studio 0.1.0 - Windows prototype
+
+This installer installs Foam Studio for your Windows account, including the .NET
+and Windows App SDK runtime files it needs. Administrator access is not required.
+
+To run a simulation, you must separately have:
+  - Windows Subsystem for Linux 2 (WSL2)
+  - An Ubuntu distribution with OpenFOAM Foundation 13 installed
+
+The tested environment is Ubuntu 22.04 with /opt/openfoam13/etc/bashrc.
+WSL and OpenFOAM are not bundled or installed by this Setup program.
+The application can launch without them and report what is missing.
+
+This early prototype runs the installed cavity tutorial. Editable case settings,
+saved projects, residual charts, and a ParaView launch button are still planned.
+
+The installer is currently unsigned. Windows may display an unknown-publisher
+or SmartScreen warning. No production signing certificate is included.
+
+Uninstalling removes application files and shortcuts. It does not remove WSL,
+OpenFOAM, or simulation cases stored inside your Linux distribution.
+
+Setup: https://openfoam.org/download/windows/
+Project: https://github.com/ianvg/OpenFoam-windows

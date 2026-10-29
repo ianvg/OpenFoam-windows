@@ -1,8 +1,10 @@
 # Third-party software
 
 The MIT license applies to original Foam Studio code and documentation. Dependencies
-keep their own licenses; this file is an initial development inventory, not a
-complete redistribution notice for an installer.
+keep their own licenses. The Windows installer includes a `ThirdPartyNotices`
+directory containing the restored NuGet dependency inventory, package metadata,
+license files, embedded third-party notices, and the .NET runtime's notices.
+The inventory includes development/build dependencies as well as runtime packages.
 
 | Software | Role | License information |
 | --- | --- | --- |
@@ -16,5 +18,5 @@ prototype copies the installed OpenFOAM cavity tutorial into a local working cas
 at runtime. Those case files keep their upstream OpenFOAM notices and GPL terms;
 they are not relicensed under MIT and are not included in this repository.
 
-Before distributing a binary release, produce a dependency/license inventory and
-include all notices required by the actual shipped package set.
+Inno Setup is used to build the installer; its compiler is not installed with Foam
+Studio. The resulting Setup executable is unsigned for this prototype release.

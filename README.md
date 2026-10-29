@@ -5,8 +5,19 @@ through Windows Subsystem for Linux 2 (WSL2).
 
 **Status: initial working prototype.** The Uno Windows app detects WSL distributions,
 checks OpenFOAM, and runs the installed cavity tutorial with live logs and Stop
-support. There is no installer yet. Configuration forms, saved projects, residual
+support. A Windows x64 Setup executable is available from the local packaging build. Configuration forms, saved projects, residual
 charts, and ParaView launch integration remain planned.
+
+## Install on Windows
+
+Run `Foam-Studio-0.1.0-win-x64-Setup.exe` from the build's release folder. Setup
+installs for your Windows account, adds a Start menu shortcut, and registers an
+uninstaller in Windows Installed Apps. The app includes .NET and Windows App SDK
+runtime files; you do not need to install a .NET SDK to use it.
+
+WSL2 and OpenFOAM Foundation 13 are separate prerequisites for running simulations.
+This unsigned prototype installer may trigger an unknown-publisher/SmartScreen
+warning. See [installation and packaging](docs/installation.md).
 
 ## Build and run
 
@@ -102,8 +113,8 @@ parallel solving, and engineering reports. These are outside the first milestone
 - Startup environment checks time out after 45 seconds. A simulation cancellation
   waits for the WSL process handshake; an unresponsive WSL startup may delay Stop.
 - Abrupt termination of the Windows app or Windows itself is not recovered yet.
-- Windows binary distribution and a complete dependency notice inventory remain
-  release work. See [third-party notes](THIRD_PARTY_NOTICES.md).
+- The installer is unsigned and has been tested on the development machine, not
+  a fresh Windows installation. See [third-party notes](THIRD_PARTY_NOTICES.md).
 
 ## License and independence
 

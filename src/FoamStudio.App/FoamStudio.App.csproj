@@ -15,6 +15,7 @@
     <Platforms>x64</Platforms>
     <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <NuGetLockFilePath Condition="'$(PublishProfile)' == 'ReleaseWindows'">$(MSBuildProjectDirectory)/packages.ReleaseWindows.lock.json</NuGetLockFilePath>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="../FoamStudio.OpenFoam/FoamStudio.OpenFoam.csproj" />
