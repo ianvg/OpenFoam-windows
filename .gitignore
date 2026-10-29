@@ -1,0 +1,26 @@
+# .NET and Uno build output
+**/bin/
+**/obj/
+.vs/
+.idea/
+*.user
+*.suo
+TestResults/
+artifacts/
+
+# Local settings and credentials
+.env
+.env.*
+!.env.example
+*.pfx
+*.p12
+
+# Simulation workspaces and generated output
+cases/
+runs/
+logs/
+*.log
+
+# OS files
+Thumbs.db
+.DS_Store
